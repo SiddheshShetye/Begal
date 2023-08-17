@@ -6,6 +6,8 @@ data class BegalEntityData<out T>(val state: EntityState, val message: String, v
     }
 }
 
+data class Data(val url: String)
+
 enum class EntityState {
     SUCCESS,
     ERROR,
