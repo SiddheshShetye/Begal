@@ -3,11 +3,10 @@ package com.siddroid.begal.core
 import android.app.Application
 import android.util.Log
 import androidx.startup.AppInitializer
-import com.siddroid.begal.data.model.BegalDTO
-import com.siddroid.begal.data.model.BegalListDTO
 import com.siddroid.begal.domain.BegalUseCase
 import com.siddroid.begal.domain.model.BegalEntityData
 import com.siddroid.begal.domain.model.Data
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,15 +14,14 @@ import org.koin.core.Koin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
-import kotlin.coroutines.CoroutineContext
 
 
 object Begal : BegalKoinComponent {
 
     private lateinit var config: BegalConfig
     private val begalUseCase: BegalUseCase by inject()
-    private val mainDispatcher: CoroutineContext by inject(named("MAIN"))
-    private val ioDispatcher: CoroutineContext by inject(named("IO"))
+    private val mainDispatcher: CoroutineDispatcher by inject(named("MAIN"))
+    private val ioDispatcher: CoroutineDispatcher by inject(named("IO"))
 
     fun getImage(callback: (BegalEntityData<List<Data>>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")

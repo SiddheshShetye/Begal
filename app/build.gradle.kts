@@ -45,6 +45,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9")
 
     // Network
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -62,4 +63,14 @@ dependencies {
     testImplementation("io.insert-koin:koin-test-junit4:$koinVersion")
 
     implementation("androidx.startup:startup-runtime:1.1.1")
+
+    //test
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.mockito:mockito-inline:2.21.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("org.mockito:mockito-core:5.4.0")
+    testImplementation("androidx.test:core:1.5.0")
+    testImplementation("androidx.test:runner:1.5.2")
+    testImplementation("androidx.test:rules:1.5.0")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 }

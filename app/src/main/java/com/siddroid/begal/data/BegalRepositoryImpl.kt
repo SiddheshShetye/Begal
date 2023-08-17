@@ -1,6 +1,5 @@
 package com.siddroid.begal.data
 
-import android.util.Log
 import com.siddroid.begal.core.BegalKoinComponent
 import com.siddroid.begal.core.network.NetworkStatusHelper
 import com.siddroid.begal.core.network.Resource
@@ -12,11 +11,9 @@ import com.siddroid.begal.domain.BegalRepository
 internal class BegalRepositoryImpl(val begalService: BegalService, val networkStatusHelper: NetworkStatusHelper, val localDataStore: LocalDataStore): BegalRepository, BegalKoinComponent {
     override suspend fun getImageFromNetwork(): Resource<BegalDTO> {
         if (!networkStatusHelper.isConnected()) {
-            Log.d("CHECK", "internet getImageFromNetwork not avilable")
             return Resource.noInternet
         }
         val response = begalService.getRandomImage()
-        Log.d("CHECK", "response in getImageFromNetwork $response")
         return if (response.message.isNullOrBlank() || response.status.isNullOrBlank()){
             Resource.unKnownError
         } else if (response.status == "success"){
@@ -42,24 +39,12 @@ internal class BegalRepositoryImpl(val begalService: BegalService, val networkSt
 
     override suspend fun getNextImageFromLocal(): Resource<BegalDTO> {
         val response = localDataStore.getNext()
-        return if (response.message.isNullOrBlank() || response.status.isNullOrBlank()){
-            Resource.unKnownError
-        } else if (response.status == "success"){
-            Resource.success(response)
-        } else {
-            Resource.error(null, response.message.ifEmpty { "Something went wrong" })
-        }
+        return Resource.success(response)
     }
 
     override suspend fun getPreviousImageFromLocal(): Resource<BegalDTO> {
         val response = localDataStore.getPrevious()
-        return if (response.message.isNullOrBlank() || response.status.isNullOrBlank()){
-            Resource.unKnownError
-        } else if (response.status == "success"){
-            Resource.success(response)
-        } else {
-            Resource.error(null, response.message.ifEmpty { "Something went wrong" })
-        }
+        return Resource.success(response)
     }
 
     override suspend fun addImageToLocal(begalDTO: BegalDTO, maxEntries: Int) {
