@@ -54,6 +54,12 @@ to get the current index
 Begal.getCurrentIndex()
 ```
 
+Architecture
+---------
+![begal_update1](https://github.com/SiddheshShetye/Begal/assets/3103872/70d8a209-cdea-413f-952d-c528c252eb9c)
+
+For architecture of this library we are following clean architecture, There is a unidirectional flow of data and single source of truth
+
 License
 -------
 
