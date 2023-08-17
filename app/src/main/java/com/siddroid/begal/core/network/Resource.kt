@@ -1,5 +1,8 @@
 package com.siddroid.begal.core.network
 
+import androidx.annotation.Keep
+
+@Keep
 data class Resource<out T>(val status: Status,
                            val data: T? = null,
                            val message: String? = "") {
@@ -17,6 +20,7 @@ data class Resource<out T>(val status: Status,
         val noInternet: Resource<Nothing> = Resource(status = Status.NO_INTERNET)
     }
 
+    @Keep
     enum class Status {
         SUCCESS,
         ERROR,
