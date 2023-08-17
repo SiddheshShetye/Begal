@@ -6,7 +6,7 @@ import com.siddroid.begal.data.model.BegalListDTO
 import com.siddroid.begal.domain.model.BegalEntityData
 import com.siddroid.begal.domain.model.Data
 
-interface BegalUseCase {
+internal interface BegalUseCase {
 
     suspend fun invoke(config: BegalConfig): BegalEntityData<List<Data>>
     suspend fun invoke(count: Int, config: BegalConfig): BegalEntityData<List<Data>>

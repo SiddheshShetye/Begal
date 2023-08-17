@@ -9,7 +9,7 @@ import com.siddroid.begal.domain.model.BegalEntityData
 import com.siddroid.begal.domain.model.Data
 import com.siddroid.begal.domain.model.EntityState
 
-class BegalUseCaseImpl(val repository: BegalRepository): BegalUseCase {
+internal class BegalUseCaseImpl(val repository: BegalRepository): BegalUseCase {
     override suspend fun invoke(config: BegalConfig): BegalEntityData<List<Data>> {
         val response = repository.getImageFromNetwork()
         val entity = response.toBegalEntity()

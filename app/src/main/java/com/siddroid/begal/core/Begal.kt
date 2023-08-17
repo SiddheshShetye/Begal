@@ -7,6 +7,7 @@ import com.siddroid.begal.data.model.BegalDTO
 import com.siddroid.begal.data.model.BegalListDTO
 import com.siddroid.begal.domain.BegalUseCase
 import com.siddroid.begal.domain.model.BegalEntityData
+import com.siddroid.begal.domain.model.Data
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,7 +25,7 @@ object Begal : BegalKoinComponent {
     private val mainDispatcher: CoroutineContext by inject(named("MAIN"))
     private val ioDispatcher: CoroutineContext by inject(named("IO"))
 
-    fun getImage(callback: (BegalEntityData<BegalDTO>) -> Unit) {
+    fun getImage(callback: (BegalEntityData<List<Data>>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
         CoroutineScope(ioDispatcher).launch {
             callback(BegalEntityData.loading())
@@ -36,7 +37,7 @@ object Begal : BegalKoinComponent {
         }
     }
 
-    suspend fun getImages(count: Int, callback: (BegalEntityData<BegalListDTO>) -> Unit) {
+    fun getImages(count: Int, callback: (BegalEntityData<List<Data>>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
         CoroutineScope(ioDispatcher).launch {
             callback(BegalEntityData.loading())
@@ -47,7 +48,7 @@ object Begal : BegalKoinComponent {
         }
     }
 
-    suspend fun getNexImage(callback: (BegalEntityData<BegalDTO>) -> Unit) {
+    fun getNexImage(callback: (BegalEntityData<List<Data>>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
         CoroutineScope(ioDispatcher).launch {
             callback(BegalEntityData.loading())
@@ -58,7 +59,7 @@ object Begal : BegalKoinComponent {
         }
     }
 
-    suspend fun getPreviousImage(callback: (BegalEntityData<BegalDTO>) -> Unit) {
+    fun getPreviousImage(callback: (BegalEntityData<List<Data>>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
         CoroutineScope(ioDispatcher).launch {
             callback(BegalEntityData.loading())

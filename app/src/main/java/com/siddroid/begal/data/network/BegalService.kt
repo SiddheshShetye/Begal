@@ -4,7 +4,7 @@ import com.siddroid.begal.data.model.BegalDTO
 import com.siddroid.begal.data.model.BegalListDTO
 import retrofit2.http.GET
 
-interface BegalService {
+internal interface BegalService {
     companion object {
         internal const val THRESHOLD_COUNT = 50
     }

@@ -3,7 +3,7 @@ package com.siddroid.begal.data
 import com.siddroid.begal.data.model.BegalDTO
 import java.util.LinkedList
 
-class LocalDataStore {
+internal class LocalDataStore {
     companion object {
         private val FORWARD_ERROR = BegalDTO("Reached last element", "error")
         private val BACKWARD_ERROR = BegalDTO("Reached first element", "error")

@@ -9,7 +9,7 @@ import com.siddroid.begal.data.model.BegalListDTO
 import com.siddroid.begal.data.network.BegalService
 import com.siddroid.begal.domain.BegalRepository
 
-class BegalRepositoryImpl(val begalService: BegalService, val networkStatusHelper: NetworkStatusHelper, val localDataStore: LocalDataStore): BegalRepository, BegalKoinComponent {
+internal class BegalRepositoryImpl(val begalService: BegalService, val networkStatusHelper: NetworkStatusHelper, val localDataStore: LocalDataStore): BegalRepository, BegalKoinComponent {
     override suspend fun getImageFromNetwork(): Resource<BegalDTO> {
         if (!networkStatusHelper.isConnected()) {
             Log.d("CHECK", "internet getImageFromNetwork not avilable")
