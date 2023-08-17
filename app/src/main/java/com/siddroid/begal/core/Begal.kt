@@ -4,57 +4,69 @@ import android.app.Application
 import android.util.Log
 import androidx.startup.AppInitializer
 import com.siddroid.begal.data.model.BegalDTO
+import com.siddroid.begal.data.model.BegalListDTO
 import com.siddroid.begal.domain.BegalUseCase
+import com.siddroid.begal.domain.model.BegalEntityData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import org.koin.core.Koin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.suspendCoroutine
 
 
-object Begal: BegalKoinComponent {
+object Begal : BegalKoinComponent {
 
     private lateinit var config: BegalConfig
     private val begalUseCase: BegalUseCase by inject()
+    private val mainDispatcher: CoroutineContext by inject(named("MAIN"))
+    private val ioDispatcher: CoroutineContext by inject(named("IO"))
 
-//    suspend fun getImage(): BegalDTO = suspendCancellableCoroutine<BegalDTO> {
-//        if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
-//        val response = begalUseCase.invoke(config)
-//        it.resume(response.data!!) { throw Exception() }
-//    }
-
-    fun getImage(callback: (BegalDTO) -> Unit)  {
+    fun getImage(callback: (BegalEntityData<BegalDTO>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
+            callback(BegalEntityData.loading())
             val response = begalUseCase.invoke(config)
-            val dto = response.data
-            Log.d("CHECK", " DTO in Begal = $dto")
-            withContext(Dispatchers.Main) {
-                dto?.let { callback(it) }
+            Log.d("CHECK", " DTO in Begal = $response")
+            withContext(mainDispatcher) {
+                callback(response)
             }
         }
-
-//        it.resume(response.data!!) { throw Exception() }
     }
 
-    suspend fun getImages(count: Int) {
+    suspend fun getImages(count: Int, callback: (BegalEntityData<BegalListDTO>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
-        begalUseCase.invoke(count, config)
+        CoroutineScope(ioDispatcher).launch {
+            callback(BegalEntityData.loading())
+            val response = begalUseCase.invoke(count, config)
+            withContext(mainDispatcher) {
+                callback(response)
+            }
+        }
     }
 
-    suspend fun getNexImage() {
+    suspend fun getNexImage(callback: (BegalEntityData<BegalDTO>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
-        begalUseCase.invokeNext(config)
+        CoroutineScope(ioDispatcher).launch {
+            callback(BegalEntityData.loading())
+            val response = begalUseCase.invokeNext(config)
+            withContext(mainDispatcher) {
+                callback(response)
+            }
+        }
     }
 
-    suspend fun getPreviousImage() {
+    suspend fun getPreviousImage(callback: (BegalEntityData<BegalDTO>) -> Unit) {
         if (!isInitialized()) throw IllegalStateException("Please Initialize using BegalInit.init()")
-        begalUseCase.invokePrevious(config)
+        CoroutineScope(ioDispatcher).launch {
+            callback(BegalEntityData.loading())
+            val response = begalUseCase.invokePrevious(config)
+            withContext(mainDispatcher) {
+                callback(response)
+            }
+        }
     }
 
     internal fun saveConfig(config: BegalConfig) {
