@@ -30,7 +30,7 @@ class NetworkStatusHelper constructor(private val connectivityManager: Connectiv
             setInternetState(isInternet && isValidated)
         }
     }
-    private var previousState: NetworkState? = null
+    private var previousState: NetworkState? = NetworkState.INTERNET_CONNECTED
     private val networkRequest = NetworkRequest
         .Builder()
         .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)

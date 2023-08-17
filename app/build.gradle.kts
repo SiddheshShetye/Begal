@@ -13,6 +13,7 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -55,8 +56,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
 
     //DI
-    implementation("io.insert-koin:koin-android:$koinVersion")
-    implementation("io.insert-koin:koin-core:$koinVersion")
+    api("io.insert-koin:koin-android:$koinVersion")
+    api("io.insert-koin:koin-core:$koinVersion")
     testImplementation("io.insert-koin:koin-test:$koinVersion")
     testImplementation("io.insert-koin:koin-test-junit4:$koinVersion")
+
+    implementation("androidx.startup:startup-runtime:1.1.1")
 }
