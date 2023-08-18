@@ -37,9 +37,9 @@ internal class BegalRepositoryImpl(val begalService: BegalService, val networkSt
         }
     }
 
-    override suspend fun getNextImageFromLocal(): Resource<BegalDTO> {
+    override suspend fun getNextImage(): Resource<BegalDTO> {
         val response = localDataStore.getNext()
-        return Resource.success(response)
+        return if (response.status == "success") Resource.success(response) else Resource.error(response, response.message.orEmpty())
     }
 
     override suspend fun getPreviousImageFromLocal(): Resource<BegalDTO> {

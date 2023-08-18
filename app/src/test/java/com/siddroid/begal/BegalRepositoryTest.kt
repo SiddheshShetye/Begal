@@ -110,7 +110,7 @@ class BegalRepositoryTest {
     fun `should return resorce successfully whenever getNext is called`() = runTest {
         givenGetNextAlwaysReturnSuccess()
 
-        val response = repo.getNextImageFromLocal()
+        val response = repo.getNextImage()
 
         Assert.assertEquals(Resource.Status.SUCCESS, response.status)
     }

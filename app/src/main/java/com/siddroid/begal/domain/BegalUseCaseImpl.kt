@@ -39,7 +39,12 @@ internal class BegalUseCaseImpl(val repository: BegalRepository): BegalUseCase {
 
     override suspend fun invokeNext(config: BegalConfig): BegalEntityData<List<Data>> {
         return if (config.enableMemCache) {
-            repository.getNextImageFromLocal().toBegalEntity().also { it.index = getCurrentIndex() }
+            val response = repository.getNextImage()
+            if (response.status == Resource.Status.ERROR) {
+                invoke(config)
+            } else {
+                response.toBegalEntity().also { it.index = getCurrentIndex() }
+            }
         } else {
             Resource.error(null as BegalDTO?, "You have reached at latest object.").toBegalEntity()
         }

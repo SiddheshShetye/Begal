@@ -5,8 +5,8 @@ import java.util.LinkedList
 
 internal class LocalDataStore {
     companion object {
-        private val FORWARD_ERROR = BegalDTO("Reached last element", "error")
-        private val BACKWARD_ERROR = BegalDTO("Reached first element", "error")
+        internal val FORWARD_ERROR = BegalDTO("Reached last element", "error")
+        internal val BACKWARD_ERROR = BegalDTO("Reached first element", "error")
     }
 
     private var localData: LinkedList<BegalDTO> = LinkedList()
